@@ -6,7 +6,7 @@
 ### Project is made with Python FastAPI
 
 #### To run the application:
-- Install requierments: `pip install -r requirments.txt`
+- Install requirements: `pip install -r requirments.txt`
 - Run the application: `python main.py`
 
 #### **The application should be run as a docker container inside a Kubernetes cluster**
