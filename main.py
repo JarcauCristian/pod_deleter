@@ -24,13 +24,13 @@ async def connection_test():
 
 
 @app.delete("/delete_pod")
-async def delete_pod(deployment_name: str, service_name: str):
-    config.load_kube_config()
+async def delete_pod(uid: str):
+    config.load_incluster_config()
     api_instance = client.AppsV1Api()
     core_v1_api = client.CoreV1Api()
 
     api_response = api_instance.delete_namespaced_deployment(
-        name=deployment_name,
+        name=f"deployment-{uid}",
         namespace=os.getenv("NAMESPACE"),
         body=client.V1DeleteOptions(
             propagation_policy='Foreground',
@@ -39,7 +39,7 @@ async def delete_pod(deployment_name: str, service_name: str):
     print(f"Deployment '{deployment_name}' deleted. Status: {api_response.status}")
 
     api_response = core_v1_api.delete_namespaced_service(
-        name=service_name,
+        name=f"service-{uid}",
         namespace=os.getenv("NAMESPACE"),
         body=client.V1DeleteOptions()
     )
