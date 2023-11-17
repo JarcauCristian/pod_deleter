@@ -36,14 +36,21 @@ async def delete_pod(uid: str):
             propagation_policy='Foreground',
         )
     )
-    print(f"Deployment '{deployment_name}' deleted. Status: {api_response.status}")
+    print(f"Deployment '{uid}' deleted. Status: {api_response.status}")
 
     api_response = core_v1_api.delete_namespaced_service(
         name=f"service-{uid}",
         namespace=os.getenv("NAMESPACE"),
         body=client.V1DeleteOptions()
     )
-    print(f"Service '{service_name}' deleted. Status: {api_response.status}")
+    print(f"Service '{uid}' deleted. Status: {api_response.status}")
+
+    api_response = core_v1_api.delete_namespaced_secret(
+        name=f"secret-{uid}",
+        namespace=os.getenv("NAMESPACE"),
+        body=client.V1DeleteOptions()
+    )
+    print(f"Secret '{uid}' deleted. Status: {api_response.status}")
 
     return JSONResponse(content="Deleted Pod Successfully!", status_code=200)
 
