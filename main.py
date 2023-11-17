@@ -56,4 +56,4 @@ async def delete_pod(uid: str):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='0.0.0.0', port=49152)
+    uvicorn.run(app, host='0.0.0.0')
