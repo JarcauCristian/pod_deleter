@@ -28,7 +28,6 @@ async def delete_pod(uid: str):
     config.load_incluster_config()
     api_instance = client.AppsV1Api()
     core_v1_api = client.CoreV1Api()
-    newtworking_v1_api = client.NetworkingV1Api()
 
     api_response = api_instance.delete_namespaced_deployment(
         name=f"deployment-{uid}",
@@ -52,13 +51,6 @@ async def delete_pod(uid: str):
         body=client.V1DeleteOptions()
     )
     print(f"Secret '{uid}' deleted. Status: {api_response.status}")
-
-    newtworking_v1_api.delete_namespaced_ingress(
-        name=f"ingress-{uid}",
-        namespace=os.getenv("NAMESPACE"),
-        body=client.V1DeleteOptions()
-    )
-    print(f"Ingress '{uid}' deleted. Status: {api_response.status}")
 
     return JSONResponse(content="Deleted Pod Successfully!", status_code=200)
 
