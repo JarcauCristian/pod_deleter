@@ -6,6 +6,8 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+ENV NAMESPACE = ""
+
 EXPOSE 8000
 
 CMD ["python3", "main.py"]
